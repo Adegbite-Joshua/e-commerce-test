@@ -42,26 +42,31 @@ let savedCart = []
 
 const showCart =()=>{
     document.getElementById('cartDisplay').innerHTML = ''
+    let totalCartPrice = 0
     if (localStorage.savedCart) {
         savedCart = JSON.parse(localStorage.getItem('savedCart'))
     }
+    
     if (savedCart.length>0) {
         savedCart.map((item, index)=>{
             document.getElementById('cartDisplay').innerHTML += `
             <div style="flex-basis: 22%;">
-                <img class="w-100 h-50 rounded-3" src="${productArrays[item].image}" alt="">
-                <h3>Product Name: ${productArrays[item].name}</h3>
-                <p>Price: #${productArrays[item].price}</p>
-                <button class="btn btn-info" onclick='deleteItem(${index})'>Delete Item</button>
-                <button class="btn btn-info" onclick='checkout(${index})'>Checkout</button>
+            <img class="w-100 h-50 rounded-3" src="${productArrays[item].image}" alt="">
+            <h3>Product Name: ${productArrays[item].name}</h3>
+            <p>Price: #${productArrays[item].price}</p>
+            <button class="btn btn-info mt-2" onclick='deleteItem(${index})'>Delete Item</button>
+            <button class="btn btn-info mt-2" onclick='checkout(${index})'>Checkout</button>
             </div>
             `
+            totalCartPrice += Number(productArrays[item].price)
         })
     } else{
         document.getElementById('cartDisplay').innerHTML = `
-            <p class='text-center bg-info p-3 rounded-4 w-100'>No Item In Your Cart </p>
+        <p class='text-center bg-info p-3 rounded-4 w-100'>No Item In Your Cart </p>
         `
     }
+    document.getElementById('cartTotalPrice').innerHTML = `#${totalCartPrice}`
+    document.getElementById('totalCartItems').innerHTML = `${savedCart.length} items`
 }
 showCart()
 

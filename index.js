@@ -32,7 +32,7 @@ productArrays.map((item, index)=>{
     <div style="flex-basis: 22%; height: 250px;">
         <img class="w-100 h-50 rounded-3" src="${item.image}" alt="">
         <h3>Product Name: ${item.name}</h3>
-        <p>Price: ${item.price}</p>
+        <p>Price: #${item.price}</p>
         <button class="btn btn-info" onclick='addToCart(${index})'>Add To Cart</button>
     </div>
     `
@@ -51,15 +51,15 @@ const showCart =()=>{
             <div style="flex-basis: 22%;">
                 <img class="w-100 h-50 rounded-3" src="${productArrays[item].image}" alt="">
                 <h3>Product Name: ${productArrays[item].name}</h3>
-                <p>Price: ${productArrays[item].price}</p>
+                <p>Price: #${productArrays[item].price}</p>
                 <button class="btn btn-info" onclick='deleteItem(${index})'>Delete Item</button>
-                <button class="btn btn-info" onclick=''>Checkout</button>
+                <button class="btn btn-info" onclick='checkout(${index})'>Checkout</button>
             </div>
             `
         })
     } else{
         document.getElementById('cartDisplay').innerHTML = `
-            <p class='text-center'>No Item In Your Cart </p>
+            <p class='text-center bg-info p-3 rounded-4 w-100'>No Item In Your Cart </p>
         `
     }
 }
@@ -72,5 +72,14 @@ const addToCart=(index)=>{
 }
 
 const deleteItem=(index)=>{
-    savedCart.splice(0,index)
+    alert(`You have succesfully delete ${productArrays[savedCart[index]].name} with Price # ${productArrays[savedCart[index]].price}`)
+    savedCart.splice(index,1)
+    localStorage.setItem('savedCart', JSON.stringify(savedCart))
+    showCart()
+}
+const checkout=(index)=>{
+    alert(`You have succesfully check out ${productArrays[savedCart[index]].name} with Price # ${productArrays[savedCart[index]].price}`)
+    savedCart.splice(index,1)
+    localStorage.setItem('savedCart', JSON.stringify(savedCart))
+    showCart()
 }
